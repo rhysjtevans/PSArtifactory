@@ -3,7 +3,7 @@ Function Remove-AFItem {
         # Parameter help description
         [Parameter()]
         [String]
-        $Repository = ($script:AFContext.Repository),
+        $Repository = (Get-AFContext).Repository,
 
         # Parameter help description
         [Parameter(Mandatory)]
@@ -11,7 +11,7 @@ Function Remove-AFItem {
         $Uri
     )
     if($Repository -eq $null){
-        throw "Reposiotry null. Configure using Set-AFServer -Repository 'RepositoryName'"
+        throw "Reposiotry null. Configure using Set-AFContext -Repository 'RepositoryName' -APIUri ..."
     }
     $Uri = "/$Repository$Uri"
     Invoke-AFRequest -Path $Uri -Method Delete
