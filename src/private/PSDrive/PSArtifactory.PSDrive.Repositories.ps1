@@ -73,9 +73,7 @@ Class RepositoryFolder: SHiPSDirectory
     {
         return (Get-RepoItems)
     }
-    # [object] GetContent(){
-        
-    # }
+    
 }
 
 class RepositoryItem : SHiPSLeaf {
@@ -92,5 +90,8 @@ class RepositoryItem : SHiPSLeaf {
         $this.Uri = $Uri
         $this.Repository = $Repository
     }
-
+    [bool] RemoveItem(){
+        Write-Host "Removing Item: $($this.Uri)"
+        return true
+    }
 }
