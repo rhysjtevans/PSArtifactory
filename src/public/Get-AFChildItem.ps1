@@ -3,12 +3,12 @@ function Get-AFChildItem {
         # Parameter help description
         [Parameter()][ValidateNotNullOrEmpty()]
         [String]
-        $Repository = ($script:AFServer.Repository),
+        $Repository = (Get-AFContext).Repository,
 
         # Parameter help description
         [Parameter()]
         [Int32]
-        $Depth = 1,
+        $Depth = 10,
 
         # Parameter help description
         [Parameter()]
@@ -23,10 +23,11 @@ function Get-AFChildItem {
     $listFolders = 0
     if($IncludeFolders){$listFolders = 1}
     if($Path){
-        $Uri = "/storage/$($Repository)$($Path)?list&includeRootPath=0&deep=1&depth=$Depth&mdTimestamps=1&listFolders=$listFolders"
+        $Uri = "/storage/$($Repository)$($Path)" #?includeRootPath=0&deep=0&depth=$Depth&mdTimestamps=1&listFolders=$listFolders"
     }else{
-        $Uri = "/storage/$($Repository)?list&includeRootPath=0&deep=1&depth=$Depth&mdTimestamps=1&listFolders=$listFolders"
+        $Uri = "/storage/$($Repository)" #?includeRootPath=0&deep=0&depth=$Depth&mdTimestamps=1&listFolders=$listFolders"
     }
-    $Results = Invoke-AFApi -Path $Uri
-    $Results.files
+    Invoke-AFApi -Path $Uri
+    # $Results  
+    # $Results
 }

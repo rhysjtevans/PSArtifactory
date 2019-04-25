@@ -20,7 +20,13 @@ function Set-AFCredential {
         )]
         [ValidateNotNullOrEmpty()]
         [string]
-        $Token
+        $Token,
+
+        [Parameter(
+            ParameterSetName='ImportFromDisk'
+        )]
+        [Switch]
+        $ImportFromDisk
     )
 
     BEGIN {
@@ -37,24 +43,27 @@ function Set-AFCredential {
         
         switch($PSCmdlet.ParameterSetName){
             "Basic" {
-                $SecPassword = ConvertTo-SecureString $Password -AsPlainText -Force        
+                # $SecPassword = ConvertTo-SecureString $Password -AsPlainText -Force        
+                $SecPassword = $Password
             }
             "AccessToken" { 
                 $UserId = "AccessToken"
-                $SecPassword = ConvertTo-SecureString $Token -AsPlainText -Force  
+                # $SecPassword = ConvertTo-SecureString $Token -AsPlainText -Force  
+                $SecPassword = $Token
             }
         }
         
-        $PSCred = New-Object System.Management.Automation.PsCredential($UserId,$SecPassword)
-        
+        # $PSCred = New-Object System.Management.Automation.PsCredential($UserId,$SecPassword)
+        $PSCred = @{
+            Username = $UserId
+            Password = $SecPassword
+        }
 
         
-        $script:AFCredential = New-Object -TypeName PSObject -Property (@{ 
-            
+        New-Object -TypeName PSObject -Property (@{ 
             Credential = $PSCred
             CredentialType = $PSCmdlet.ParameterSetName
-        })
-        
+        }) | ConvertTo-Json | Out-File -FilePath (Get-AFCredentialPath)
     }
     END {
         

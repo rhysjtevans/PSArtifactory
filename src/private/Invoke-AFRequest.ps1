@@ -33,17 +33,25 @@ function Invoke-AFRequest {
 
 
         [Parameter()]
-        [ValidateSet("RepoUri","APIUri")]
         [string]
-        $Uri = "APIUri"
+        $Uri,
+
+
+        [Parameter()]
+        [string]
+        $OutFile
     )
 
-    $FullUri = (Get-AFServer).$Uri
+    $FullUri = (Get-AFContext).BaseUri
     
     $IwrParams = @{
         Uri     = $FullUri + $Path
         Method  = $Method
         ContentType = $ContentType
+        AllowUnencryptedAuthentication = $true
+    }
+    if($Uri){
+        $IwrParams.Uri = $Uri
     }
 
     
@@ -64,8 +72,11 @@ function Invoke-AFRequest {
     if($Body){
         $IwrParams += @{ Body = $Body}
     }
+    if($OutFile){
+        $IwrParams += @{ OutFile = $OutFile}
+    }
 
-    #$IwrParams | ConvertTo-Json -Depth 4
+    $IwrParams | ConvertTo-Json -Depth 4
     try{
         Invoke-RestMethod @IwrParams
     }

@@ -1,4 +1,4 @@
-function Set-AFServer {
+function Set-AFContext {
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact='Low')]
     param(
         [Parameter()]
@@ -9,7 +9,12 @@ function Set-AFServer {
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $APIUri
+        $APIUri,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $BaseUri
     )
 
     BEGIN {
@@ -25,10 +30,10 @@ function Set-AFServer {
         $Prop = @{ 
             APIUri = $APIUri
             Repository = $Repository
+            BaseUri = $BaseUri
         }
         
-        $script:AFServer = New-Object -TypeName PSObject -Property $Prop
-        
+        $Prop | ConvertTo-Json | Out-File -FilePath (Get-AFContextPath)
     }
     END {
 

@@ -3,7 +3,7 @@ Function Remove-AFItem {
         # Parameter help description
         [Parameter()]
         [String]
-        $Repository = ($script:AFServer.Repository),
+        $Repository = ($script:AFContext.Repository),
 
         # Parameter help description
         [Parameter(Mandatory)]

@@ -38,7 +38,7 @@ function Invoke-AFApi {
         $Uri = "APIUri"
     )
 
-    $FullUri = (Get-AFServer).$Uri + "/api"
+    $FullUri = (Get-AFContext).APIUri
     
     $IwrParams = @{
         Uri     = $FullUri + $Path
@@ -65,12 +65,12 @@ function Invoke-AFApi {
         $IwrParams += @{ Body = $Body}
     }
 
-    #$IwrParams | ConvertTo-Json -Depth 4
+    # Write-Host ($IwrParams | ConvertTo-Json -Depth 4)
     try{
-        Invoke-RestMethod @IwrParams
+        Invoke-RestMethod @IwrParams -AllowUnencryptedAuthentication
     }
     catch {
-        $_.Exception | ConvertTo-Json -Depth 1
+        $_.Exception.Message
     }
     
     

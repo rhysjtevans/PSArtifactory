@@ -27,7 +27,10 @@ function Get-AFRepository {
         if($Type){
             $Path += "?type=$Type"
         }
-        Invoke-AFApi -Path $Path
+        (Invoke-AFApi -Path $Path) | % { 
+            [PSCustomObject]@{Url = $PSItem.url; Name = $PSItem.key}
+            # [Repository]::new($PSItem.key, $PSItem.url)
+        }
     }
     
     end {
