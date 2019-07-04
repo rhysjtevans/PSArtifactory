@@ -1,9 +1,13 @@
 # PSArtifactory
-PSArtifactory is a PowerShell module to interact with Artifactory.
-It is inspired from this module by [Nicholas Dille](http://dille.name/blog) - [PowerShell-Artifactory](https://github.com/nicholasdille/PowerShell-Artifactory).
+PSArtifactory is a PowerShell module to interact with Artifactory inspired from [PowerShell-Artifactory](https://github.com/nicholasdille/PowerShell-Artifactory) by [Nicholas Dille](http://dille.name/blog).
+
+I wrote my own module because
+  1) Updating Nicholas' API wrapper function would have involved some breaking changes.
+  2) A lot more fun! :) 
+  
 
 ## Getting Started
-PSArtifactory will be published to PSGallery once it has reached a significant milestone.
+PSArtifactory has now been published to [PowerShell Gallery](https://www.powershellgallery.com/packages/PSArtifactory)
 
 ## Goal for v1.0.0 Feature Set
 - PowerShell Core [Linux, MacOS, Windows]
